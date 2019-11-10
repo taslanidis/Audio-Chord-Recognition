@@ -1,12 +1,12 @@
 import numpy as np
 
 
-def chords_to_onehot(encoder, Spectrograms, Chordlab, Chords, Artist='The Beatles'):
+def chords_to_onehot(encoder, Timeseries, Chordlab, Chords, Artist='The Beatles'):
     chords2vec = {}
-    for album in Spectrograms[Artist].keys():
+    for album in Chordlab[Artist].keys():
         chords2vec[album] = {}
-        for track_no in Spectrograms[Artist][album].keys():
-            times = Spectrograms[Artist][album][track_no]['times']
+        for track_no in Chordlab[Artist][album].keys():
+            times = list(range(Timeseries[Artist][album][track_no].shape[0]))
             df_rows = Chordlab[Artist][album][track_no].itertuples()
             index = 0
             max_len = len(Chordlab[Artist][album][track_no])
