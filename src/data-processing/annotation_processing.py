@@ -1,18 +1,17 @@
 import numpy as np
 
 
-def chords_to_onehot(encoder, Timeseries, Chordlab, Chords, Artist='The Beatles'):
+def chords_to_onehot(encoder, Timestamps, Chordlab, Chords, Artist='The Beatles'):
     chords2vec = {}
     for album in Chordlab[Artist].keys():
         chords2vec[album] = {}
         for track_no in Chordlab[Artist][album].keys():
-            times = list(range(Timeseries[Artist][album][track_no].shape[0]))
             df_rows = Chordlab[Artist][album][track_no].itertuples()
             index = 0
             max_len = len(Chordlab[Artist][album][track_no])
             vector = np.empty((len(Chords),))
             row = next(df_rows)
-            for timestamp in times:
+            for timestamp in Timestamps[Artist][album][track_no]:
                 if ((index + 1) < max_len) & (timestamp >= row[2]):
                     index += 1
                     row = next(df_rows)
@@ -57,7 +56,7 @@ def slicing(chunk_size, frequencies_num, chords_num, x_initial_train, y_initial_
     while timestep < x_initial_train.shape[0]:
         batch_x = np.resize(x_initial_train[timestep:timestep + chunk_size, :],
                             (1, chunk_size, frequencies_num))  # num of frequencies
-        batch_y = np.resize(y_initial_train[timestep:timestep + chunk_size, :], (1, chunk_size, len(Chords)))
+        batch_y = np.resize(y_initial_train[timestep:timestep + chunk_size, :], (1, chunk_size, chords_num))
 
         x_train = np.append(x_train, batch_x, axis=0)
         y_train = np.append(y_train, batch_y, axis=0)

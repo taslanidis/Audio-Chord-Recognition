@@ -9,6 +9,7 @@ from scipy import signal
 
 # librosa
 import librosa
+from librosa.core.time_frequency import frames_to_time
 
 
 # get all audio files and create spectrogram for each track
@@ -38,8 +39,10 @@ def create_spectrograms(n_fft=1024, nperseg=1024, audiofiles_path='Test-Audiofil
 
 
 # get all audio files and create chromagram for each track
-def create_chromagrams(n_fft=2048, hop_length=512, audiofiles_path='Test-Audiofiles/The Beatles'):
+def create_chromagrams(hop_length=512, audiofiles_path='Audiofiles/The Beatles'):
     Chromagrams = {'The Beatles': {}}
+    Timestamps = {'The Beatles': {}}
+
     for filename in Path(audiofiles_path).glob('**/wav/*.wav'):
 
         path, track = os.path.split(filename)
@@ -50,11 +53,18 @@ def create_chromagrams(n_fft=2048, hop_length=512, audiofiles_path='Test-Audiofi
 
         # read wav and create chromagram
         track, sample_rate = librosa.load(filename)
+        track_time = librosa.get_duration(y=track, sr=sample_rate)
+        n_fft = int(track_time // (hop_length / sample_rate))
         chroma = librosa.feature.chroma_stft(track, sr=sample_rate, n_fft=n_fft, hop_length=hop_length)
+
+        frames = list(range(0, chroma.shape[1]))
+        times = frames_to_time(frames, sr=sample_rate, hop_length=hop_length, n_fft=n_fft)
 
         if album not in Chromagrams['The Beatles']:
             Chromagrams['The Beatles'][album] = {}
+            Timestamps['The Beatles'][album] = {}
 
         Chromagrams['The Beatles'][album][track_no] = chroma.T
+        Timestamps['The Beatles'][album][track_no] = times
 
-    return Chromagrams
+    return Chromagrams, Timestamps
