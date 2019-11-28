@@ -1,17 +1,23 @@
 # Audio Chord Estimation
 
-### Audio_Chord_Estimation.ipynb
+In this project, we searching for methods to recognize audio chord with neural networks
+There are various approach for either **Pre-Processing** and **Neural Network Modeling**
+
+## Pre Processing
+
 * One Hot Encodings for Annotations
-* Indexing on Annotations & Spectrograms
+* Indexing on Annotations & Timeseries
 ![](images/Vector_flow.png)
 * Slicing & Padding
 ![](images/slicing.png)
-* tf.keras model
-* predictions
 
-### Annotation_Mapping.ipynb
-Alternative representation from the 'one hot encodings' that required a lot of memory (RAM).
-* Mapping <b>Chords to Notes</b> and <b>Notes to Chords</b>
+## Train Data
 
-### Chord_Embeddings.ipynb
+### Spectrograms
+Converting raw audio to spectrograms, and use frequencies as features.
+
+### Chromagrams
+Converting raw audio to spectrograms, and then "stack" each frequency to it's semitone -> So we have 12 features, (same as the number of semitones).
+
+## Exploring the use of chord embeddings
 * chord embeddings just like NLP -> <b>chords2vec</b>
