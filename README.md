@@ -1,4 +1,4 @@
-# Audio Chord Estimation
+# Audio Chord Estimation - *(Ongoing...)*
 
 In this project, we searching for methods to recognize audio chord with neural networks
 There are various approach for either **Pre-Processing** and **Neural Network Modeling**
