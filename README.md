@@ -18,18 +18,19 @@ mono .wav format at 44kHz sample rate, with their respective chord label files t
 the start and the end time of each chord appearance.
 
 ## Pre Processing
-![](images/data_flow.png)
+![](images/data_flow.PNG)
 
-* **DSP**
+#### DSP
 Constant Q transform with 192 frequency bins and 24 bins per octave
 
-* **Data Augmentation**
-![](images/data_augmentation.png)
+#### Data Augmentation
+![](images/data_augmentation.PNG)
 
-### Chord Analysis
+#### Chord Analysis
 ![](images/chord_analysis.png)
+
 Non-popular modes appearances
-![](images/chord_analysis_non_pop.png)
+![](images/chord_analysis_non_pop.PNG)
 
 ## Model
 Model Architecture
@@ -41,5 +42,5 @@ classification. When the models sees 10K major chords but only 1000 minor chords
 not be able to classify the minor chord as minor, and will label them as major.
 
 Weight of class:
-![](images/class_weights.png)
+![](images/class_weights.PNG)
 
