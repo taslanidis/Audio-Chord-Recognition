@@ -28,10 +28,10 @@ Constant Q transform with 192 frequency bins and 24 bins per octave
 ![](images/data_augmentation.PNG)
 
 #### Chord Analysis
-![](images/chord_analysis.png)
+![](images/chord_analysis.PNG)
 
 Non-popular modes appearances
-![](images/chord_analysis_non_pop.PNG)
+![](images/ChordModesNumbers.png)
 
 ## Model
 
