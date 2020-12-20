@@ -1,39 +1,45 @@
-# Audio Chord Estimation - *(Ongoing...)*
+# Audio Chord Estimation
 
-In this project, we searching for methods to recognize audio chord with neural networks
-There are various approach for either **Pre-Processing** and **Neural Network Modeling**
+Audio chords are a fundamental piece of music and they are built over certain harmonic
+rules, appearing appealing to the human ear. At the same time, deep learning is widely
+known for it’s ability to discover non linear relationships on multi dimensional data. In this
+thesis, through deep learning I will use models to aim and discover those relationships and
+the point to that a neural network can learn some fundamental knowledge of music theory. 
+
+## Introduction
+This project focus on the exploration of various methods for each step of the process, including pre
+processing, model architectures, training hyper parameters and post processing
+techniques. There are some methods which helped improve the accuracy substantially,
+and others that didn’t make a great impact on the result.
+
+## Dataset
+Isophonics dataset, created by Harte [3] providing 180 songs by The Beatles. The format of the data set, is 180 audio tracks on
+mono .wav format at 44kHz sample rate, with their respective chord label files that have
+the start and the end time of each chord appearance.
 
 ## Pre Processing
+![](images/data_flow.png)
 
-* **One Hot Encodings** for Annotations
-* **Indexing** on Annotations & Timeseries
-![](images/Vector_flow.png)
-* **Slicing** *in small chunks in order for the NN to extract information* & **Padding** *with zeros at frequencies, and the Neutral chord in Annotations*.
-![](images/slicing.png)
+* **DSP**
+Constant Q transform with 192 frequency bins and 24 bins per octave
 
-## Train Data
+* **Data Augmentation**
+![](images/data_augmentation.png)
 
-### Spectrograms
-Converting raw audio to spectrograms, and use frequencies as features.
-
-### Chromagrams
-Converting raw audio to spectrograms, and then "stack" each frequency to it's semitone -> So we have 12 features, (same as the number of semitones).
+### Chord Analysis
+![](images/chord_analysis.png)
+Non-popular modes appearances
+![](images/chord_analysis_non_pop.png)
 
 ## Model
+Model Architecture
+![](images/model_architecture.png)
 
-I tried to predict chords, and not each semitone separately and then build the chord
+As it is evident from the data analysis done on chords, and confirmed by the training
+process, most chord classes are under represented, a problem called imbalanced
+classification. When the models sees 10K major chords but only 1000 minor chords it will
+not be able to classify the minor chord as minor, and will label them as major.
 
-### Spectrogram models
-- Convolutional Layers for 'chord entities'
-- Recurrent Layers for 'sequences of chords'
-- Embedding Layer for 'harmonies'
-- Final Dense Layer with softmax activation for chord prediction
+Weight of class:
+![](images/class_weights.png)
 
-### Chromagram models
-- Multiple Recurrent Convolutional Layers for 'chord entities'
-- Recurrent Layer for 'sequences of chords'
-- sigmoid activation for the semitones activated
-- Dense layer, and then softmax activation for the chord
-
-## Exploring the use of chord embeddings
-* chord embeddings just like NLP -> <b>chords2vec</b>
