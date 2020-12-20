@@ -22,6 +22,7 @@ the start and the end time of each chord appearance.
 
 #### DSP
 Constant Q transform with 192 frequency bins and 24 bins per octave
+![](images/cqt.PNG)
 
 #### Data Augmentation
 ![](images/data_augmentation.PNG)
